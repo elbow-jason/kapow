@@ -1,6 +1,6 @@
 <:Body>
 
-   {{ case page("loading") do }}
-   {{   true ->  }} <div>Loading</div>
-   {{   false -> }} <div></div>
-   {{ end }}
+   <% case page("loading") do %>
+   <%  true  -> %> <div> Loading </div>
+   <%  false -> %> <div></div>
+   <% end %>

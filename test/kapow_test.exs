@@ -49,8 +49,6 @@ defmodule KapowMatchesTest do
   use ExUnit.Case, async: true
   alias Kapow.Matches, as: Matches
 
-
-
   test "Kapow.Matches.component matches components" do
     assert Matches.component? "<:Body> is a component!"
     assert Matches.component? "<:Kitten> is a component!"
