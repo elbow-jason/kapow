@@ -1,0 +1,2 @@
+defmodule Kapow do
+end
