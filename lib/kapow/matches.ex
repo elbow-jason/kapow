@@ -30,10 +30,14 @@ defmodule Kapow.Matches do
   end
 
   def close_brackets?(string) do
-    matches?(raw_close_brackets, string)# and
-    #not matches?("\}" <> raw_close_brackets, string)
+    matches?(raw_close_brackets, string)
   end
 
+  def double_quote?(string) do
+    matches?(raw_double_quote, string)
+  end
+
+  def raw_double_quote,       do: ~s(")
   def raw_component,          do: "<:[a-zA-Z_]+>"
   def raw_open_equals,        do: "^<%="
   def raw_open_brackets,      do: "^<%"

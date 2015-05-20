@@ -1,8 +1,26 @@
 defmodule KapowTest do
   use ExUnit.Case, async: true
 
-  test "the truth" do
-    assert 1 + 1 == 2
+  test "parses actual html" do
+    result = "test/example1.html"
+    |> Kapow.parse
+    assert result == [
+      %{"component" => "Body"},
+      :open_brackets,
+      "case", "page(", {:string, "loading"}, ")", "do",
+      :close_brackets,
+      :open_brackets,
+      "true", "->",
+      :close_brackets,
+      "<div>", "Loading", "</div>",
+      :open_brackets,
+      "false", "->",
+      :close_brackets,
+      "<div></div>",
+      :open_brackets,
+      "end",
+      :close_brackets
+    ]
   end
 
 end
@@ -42,6 +60,25 @@ defmodule KapowParseTest do
     assert result == expected
   end
 
+  test "identify_strings splits strings from code" do
+    str = ~s(<div> hello "punk" </div>)
+    result = str |> Parse.identify_strings
+    expected = [code: "<div> hello ", string: "punk", code: " </div>"]
+    assert result == expected
+  end
+  test "identify_strings is not fooled by escaped strings" do
+    expected = [code: "<div> hello ", string: "punk", code: " </div>"]
+    str1 = "<div> hello \"punk\" </div>"
+    result1 = str1 |> Parse.identify_strings
+    assert result1 == expected
+  end
+
+  test "identify_strings is not fooled by other strings" do
+    expected = [code: "<div> hello ", string: "punk", code: " </div>"]
+    str2 = ~s(<div> hello "punk" </div>)
+    result2 = str2 |> Parse.identify_strings
+    assert result2 == expected
+  end
 end
 
 
